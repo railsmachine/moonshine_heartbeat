@@ -1,0 +1,13 @@
+= Moonshine Heartbeat
+
+=== A plugin for Moonshine[http://github.com/railsmachine/moonshine]
+
+A plugin for installing and managing heartbeat.
+
+=== Instructions
+
+* <tt>script/plugin install git://github.com/railsmachine/moonshine_heartbeat.git</tt>
+* Configure settings if needed
+    configure(:heartbeat => {:foo => true})
+* Invoke the recipe(s) in your Moonshine manifest
+    recipe :heartbeat
