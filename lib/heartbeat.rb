@@ -2,7 +2,10 @@ module Heartbeat
 
   def heartbeat(options = {})
     package 'heartbeat', :ensure => :installed
-    service 'heartbeat', :ensure => :running, :require => package('heartbeat')
+    service 'heartbeat',
+      :ensure  => :running,
+      :require => package('heartbeat'),
+      :restart => '/etc/init.d/heartbeat reload'
 
     file '/etc/ha.d/authkeys',
       :ensure  => :present,
