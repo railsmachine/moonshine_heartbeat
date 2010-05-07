@@ -27,8 +27,8 @@ module Heartbeat
 private
 
   def haresources
-    buffer = ''
-    configuration[:heartbeat][:resources].each do |preferred_node, string_or_array_of_resources|
+    configuration[:heartbeat][:resources].map do |preferred_node, string_or_array_of_resources|
+      buffer = ''
       buffer << preferred_node.to_s
       buffer << ' '
       if string_or_array_of_resources.is_a?(Array)
@@ -36,9 +36,8 @@ private
       else
         buffer << string_or_array_of_resources
       end
-      buffer << "\n"
-    end
-    buffer
+      buffer
+    end.join("\n")
   end
 
   def ucast_ip

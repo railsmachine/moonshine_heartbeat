@@ -51,8 +51,8 @@ EOF
 
     describe "should include ha.cf" do
       it "with a correct node list" do
-        @manifest.files['/etc/ha.d/ha.cf'].content.should match /node 12.34.56.78/
-        @manifest.files['/etc/ha.d/ha.cf'].content.should match /node 12.34.56.79/
+        @manifest.files['/etc/ha.d/ha.cf'].content.should match /node haproxy1/
+        @manifest.files['/etc/ha.d/ha.cf'].content.should match /node haproxy2/
       end
 
       it "with auto_failback enabled" do

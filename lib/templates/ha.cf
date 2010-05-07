@@ -65,5 +65,5 @@ bcast <%= configuration[:heartbeat][:interface] || 'eth0' %>
 
 auto_failback <%= ha_config_boolean(configuration[:heartbeat][:auto_failback], true) %>
 
-<% configuration[:heartbeat][:nodes].each do |hostname, ip| %>node <%= ip %>
+<% configuration[:heartbeat][:nodes].each do |hostname, ip| %>node <%= hostname %>
 <% end %>
