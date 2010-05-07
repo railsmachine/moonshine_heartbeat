@@ -1,19 +1,56 @@
 module Heartbeat
 
-  # Define options for this plugin via the <tt>configure</tt> method
-  # in your application manifest:
-  #
-  #    configure(:heartbeat => {:foo => true})
-  #
-  # Moonshine will autoload plugins, just call the recipe(s) you need in your
-  # manifests:
-  #
-  #    recipe :heartbeat
   def heartbeat(options = {})
-    # define the recipe
-    # options specified with the configure method will be 
-    # automatically available here in the options hash.
-    #    options[:foo]   # => true
+    package 'heartbeat', :ensure => :installed
+    service 'heartbeat', :ensure => :running, :require => package('heartbeat')
+
+    file '/etc/ha.d/authkeys',
+      :ensure  => :present,
+      :content => template("#{File.dirname(__FILE__)}/templates/authkeys", binding),
+      :mode    => '600',
+      :notify  => service('heartbeat')
+
+    file '/etc/ha.d/haresources',
+      :ensure  => :present,
+      :content => template("#{File.dirname(__FILE__)}/templates/haresources", binding),
+      :notify  => service('heartbeat')
+
+    file '/etc/ha.d/ha.cf',
+      :ensure  => :present,
+      :content => template("#{File.dirname(__FILE__)}/templates/ha.cf", binding),
+      :notify  => service('heartbeat')
+  end
+
+private
+
+  def haresources
+    buffer = ''
+    configuration[:heartbeat][:resources].each do |preferred_node, string_or_array_of_resources|
+      buffer << preferred_node.to_s
+      buffer << ' '
+      if string_or_array_of_resources.is_a?(Array)
+        buffer << string_or_array_of_resources.join(' ')
+      else
+        buffer << string_or_array_of_resources
+      end
+      buffer << "\n"
+    end
+    buffer
+  end
+
+  def ucast_ip
+    opposite_node = configuration[:heartbeat][:nodes].find do |hostname, ip|
+      !hostname.to_s.match(Facter.hostname)
+    end
+    opposite_node.last
+  end
+
+  def ha_config_boolean(key, default = true)
+    if key.nil?
+      default ? 'on' : 'off'
+    else
+      ((!!key) == true) ? 'on' : 'off'
+    end
   end
 
 end
