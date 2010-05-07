@@ -60,5 +60,37 @@ The <tt>password</tt> is a simple key used for each heartbeat server to
 authenticate with each other.
 
 You'd then point your DNS to the high availibiltiy resource that heartbeat
-monitors - 12.34.56.80. If haproxy1 goes down, haproxy2 will take over this ip
-and continue serving requests.
+monitors - 12.34.56.80. If haproxy1 goes down, haproxy2 will take over this IP
+and continue serving requests. When haproxy1 comes back up, it'll take back
+the high availibility IP.
+
+=== Advanced Configuration
+
+Some examples of more custom configuration follow:
+
+  :heartbeat:
+    :resources:
+      :haproxy1: -
+        12.34.56.80
+        haproxy
+        god
+    :nodes:
+      :haproxy1: 12.34.56.78
+      :haproxy2: 12.34.56.79
+    :password: sekret
+    :deadtime: 10
+    :warntime: 5
+    :initdead: 20
+    :interface: eth1
+    :udpport: 6009
+    :auto_failback: no
+
+Please see the "heartbeat wiki"[http://wiki.linux-ha.org/ha.cf] for more
+more information on these advanced config options.
+
+=== Bcast/Ucast/Mcast
+
+This plugin defaults to UDP ucast heartbeats because we've found them to be
+the most reliable. There is experimental (untested) support for mcast - see
+the ha.cf[https://github.com/railsmachine/moonshine_heartbeat/blob/master/lib/templates/ha.cf]
+template on Github for details
