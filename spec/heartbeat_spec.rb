@@ -32,6 +32,10 @@ EOF
       @manifest.packages.keys.should include 'heartbeat'
     end
 
+    it "should include the heartbeat config directory" do
+      @manifest.files.keys.should include '/etc/ha.d'
+    end
+
     it "should include the trio of required heartbeat config files" do
       @manifest.files.keys.should include '/etc/ha.d/haresources'
       @manifest.files.keys.should include '/etc/ha.d/authkeys'

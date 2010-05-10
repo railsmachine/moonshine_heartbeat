@@ -7,6 +7,7 @@ module Heartbeat
       :require => package('heartbeat'),
       :restart => '/etc/init.d/heartbeat reload'
 
+    file '/etc/ha.d', :ensure => :directory
     file '/etc/ha.d/authkeys',
       :ensure  => :present,
       :content => template("#{File.dirname(__FILE__)}/templates/authkeys", binding),
