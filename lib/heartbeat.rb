@@ -43,7 +43,7 @@ private
 
   def ucast_ip
     opposite_node = configuration[:heartbeat][:nodes].find do |hostname, ip|
-      !hostname.to_s.match(Facter.hostname)
+      !hostname.to_s.match(Facter.fqdn)
     end
     opposite_node.last
   end
