@@ -15,6 +15,7 @@ describe "A manifest with the Heartbeat plugin" do
   - 12.34.56.81
   - haproxy
 :password: sekret
+:ping: 12.34.56.78
 EOF
 )
   end
@@ -61,6 +62,11 @@ EOF
 
       it "with auto_failback enabled" do
         @manifest.files['/etc/ha.d/ha.cf'].content.should match /auto_failback on/
+      end
+
+      it "with ipfail configured and the ping node setup" do
+        @manifest.files['/etc/ha.d/ha.cf'].content.should match /respawn hacluster \/usr\/lib\/heartbeat\/ipfail/
+        @manifest.files['/etc/ha.d/ha.cf'].content.should match /ping 12.34.56.78/
       end
     end
 

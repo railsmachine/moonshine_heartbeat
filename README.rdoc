@@ -84,6 +84,7 @@ Some examples of more custom configuration follow:
     :interface: eth1
     :udpport: 6009
     :auto_failback: no
+    :ping: 12.34.56.1
 
 Please see the "heartbeat wiki"[http://wiki.linux-ha.org/ha.cf] for more
 more information on these advanced config options.

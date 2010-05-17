@@ -67,3 +67,8 @@ auto_failback <%= ha_config_boolean(configuration[:heartbeat][:auto_failback], t
 
 <% configuration[:heartbeat][:nodes].each do |hostname, ip| %>node <%= hostname %>
 <% end %>
+
+<% if configuration[:heartbeat][:ping] %>
+respawn hacluster /usr/lib/heartbeat/ipfail
+ping <%= configuration[:heartbeat][:ping] %>
+<% end %>
