@@ -70,6 +70,7 @@ the high availibility IP.
 
 Some examples of more custom configuration follow:
 
+<pre><code>
   :heartbeat:
     :resources:
       :haproxy1: -
@@ -87,6 +88,7 @@ Some examples of more custom configuration follow:
     :udpport: 6009
     :auto_failback: no
     :ping: 12.34.56.1
+</code></pre>
 
 Please see the "heartbeat wiki"[http://wiki.linux-ha.org/ha.cf] for more
 more information on these advanced config options.
