@@ -27,6 +27,7 @@ deployment.
 A basic heartbeat setup with two haproxy servers would look something like
 this in <tt>moonshine.yml</tt>
 
+<pre><code>
   :heartbeat:
     :resources:
       :haproxy1: 12.34.56.80
@@ -34,6 +35,7 @@ this in <tt>moonshine.yml</tt>
       :haproxy1: 12.34.56.78
       :haproxy2: 12.34.56.79
     :password: sekret
+</code></pre>
 
 The <tt>resources</tt> key is a hash of preferred nodes and the resources that
 these nodes provide. In this case, we have two servers, haproxy1 and haproxy2.
